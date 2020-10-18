@@ -6,6 +6,7 @@ const app = express()
 app.use(express.json())
 
 //Rutas
+app.use(require('./routes/auth'))
 
 const PORT = process.env.PORT || 5000
 
@@ -13,3 +14,4 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
     console.log(`Servidor iniciado`)
 })
+
