@@ -1,10 +1,13 @@
-const { Pool } = require('pg')
+const Pool = require('pg').Pool
 
 const pool = new Pool({
     user: "postgres",
     password: "12345",
     host: "localhost",
+    port: 5433,
+    database: "TesisApp"
 })
+
 
 pool.connect((err, client, done) => {
     if(err) {
