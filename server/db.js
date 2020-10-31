@@ -6,7 +6,7 @@ const pool = new Pool({
     host: "localhost",
     port: 5433,
     database: "TesisApp"
-})
+})  
 
 
 pool.connect((err, client, done) => {

@@ -1,0 +1,23 @@
+body{
+    background-color: #55C867
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.login-title{
+    text-align: center;
+}
+
+.card{
+    margin-left: auto;
+    margin-right: auto;  
+    width: 70%   
+}
+
+.boton{
+    width: 70%
+}

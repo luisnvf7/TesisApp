@@ -59,7 +59,10 @@ router.post("/registro", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+
   const { username, password } = req.body;
+
+  console.log("REQBODY", req.body)
 
   try {
     /* Obtener contraseña de la base de datos */
@@ -82,9 +85,11 @@ router.post("/login", async (req, res) => {
         message: "Usuario logeado satisfactoriamente",
       });
     }
+    
     return res
-      .status(422)
+      .status(400)
       .json({ message: "Contraseña o usuario incorrectos" });
+
   } catch (error) {
     console.log("ERROR", error);
   }
