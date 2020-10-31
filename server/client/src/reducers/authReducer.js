@@ -25,6 +25,7 @@ export default function (state = initialState, action) {
 
             }
         case LOGIN_SUCCESS:
+            console.log(action)
             return {
                 ...state,
                 isAuthenticated: true,

@@ -10,7 +10,6 @@ export const returnErrors = (msg, status, id = null) => {
             id
         }
     }
-
 }
 
 export const clearErrors = () => {
