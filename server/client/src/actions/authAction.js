@@ -1,32 +1,33 @@
-import axios from 'axios'
+import axios from "axios";
 
 /* Tipos */
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '../actions/types'
+import { LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR } from "../actions/types";
 
-import { returnErrors } from './errorActions'
+import { returnErrors } from "./errorActions";
 
-export const login = async ( usuario, password ) => async dispatch => {
+export const login = (username, password) => async (dispatch) => {
+  let body = JSON.stringify({ username, password });
 
-    try{
-        /* Localhost:login */
-        let res = await axios.post('/login', {usuario, password})
-    
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data
-        })
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
-    } catch (err) {
+  try {
+    /* Localhost:login */
+    let res = await axios.post("/login", body, config);
 
-        dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'))
-        dispatch({type: LOGIN_FAIL })
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
 
-    }
-}
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status, LOGIN_FAIL));
+    dispatch({ type: AUTH_ERROR });
+  }
 
-export const register = async ({  }) => async dispatch => {
+};
 
-
-
-}
-
+export const register = async ({}) => async (dispatch) => {};
