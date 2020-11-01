@@ -11,7 +11,7 @@ const Login = (props) => {
     <div>
       <Row>
         <Col>
-          <LeftSide />
+          <LeftSide history = { props.history } />
         </Col>
         <Col>
           <RightSide />

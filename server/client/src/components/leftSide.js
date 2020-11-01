@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import {connect} from 'react-redux'
 
@@ -7,7 +7,7 @@ import { login } from '../actions/authAction'
 
 import { Form, Button } from "react-bootstrap";
 
-const LeftSide = ({ onLogin }) => {
+const LeftSide = ({ onLogin, history }) => {
 
   const [usuario, setUsuario] = useState("");
 
@@ -17,7 +17,7 @@ const LeftSide = ({ onLogin }) => {
     <div>
       <KeyboardEventHandler
         handleKeys={["enter"]}
-        onKeyEvent={(key, e) => onLogin(usuario, password)}
+        onKeyEvent={(key, e) => onLogin(usuario, password, history)}
       />
 
       <Form>
@@ -30,25 +30,19 @@ const LeftSide = ({ onLogin }) => {
           <Form.Label>Ingresa contraseña</Form.Label>
           <Form.Control placeholder="contraseña" onChange = { (e) => setPassword(e.target.value) } />
         </Form.Group>
-        <Button onClick = {() => onLogin(usuario, password)} >Ingresar</Button>
+        <Button onClick = {() => onLogin(usuario, password, history)} >Ingresar</Button>
       </Form>
     </div>
   );
 };
 
-// const mapStateToProps = (state) => {
-
-// }
-
 const mapDispatchToProps = (dispatch) => {
 
     return {
-      onLogin : (usuario, password) => {
-        dispatch(login(usuario, password))
+      onLogin : (usuario, password, history) => {
+        dispatch(login(usuario, password, history))
       }
     }
-    
-
 }
 
 export default connect(null, mapDispatchToProps)(LeftSide); 
