@@ -1,0 +1,10 @@
+.toast{
+    left: 65%;
+    top: 100px;
+    position: absolute;
+    -webkit-transition: opacity 2s;
+    -moz-transition: opacity 2s;
+    -o-transition: opacity 2s;
+    -ms-transition: opacity 2s;       
+    transition: opacity 2s;
+}
