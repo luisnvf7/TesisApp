@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect  } from "react";
 // import "../styles/PageStyles/login.css";
 import { Row, Col } from "react-bootstrap";
+
 
 /* Components */
 import LeftSide from "../components/leftSide";
 import RightSide from "../components/rightSide";
 
 const Login = (props) => {
+
   return (
     <div>
       <Row>
         <Col>
-          <LeftSide />
+          <LeftSide history = { props.history } />
         </Col>
         <Col>
           <RightSide />
@@ -21,4 +23,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Login

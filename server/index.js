@@ -6,25 +6,33 @@ const cors = require('cors')
 const session = require('express-session')
 const passport = require('passport')
 
+const session = require('express-session')
+const passport = require('passport')
+
+const cookieParser = require('cookie-parser')
+
+const initializePassport = require('./passport.Config')
+
+
 //Middlewares
 app.use(express.json())
 app.use(cors())
 
-require('./config/passport')(passport)
 
-//Express Session
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false
 }))
 
+app.use(cookieParser('secretcode'))
 app.use(passport.initialize());
 app.use(passport.session());
 
+initializePassport(passport)
+
 //Rutas
 app.use(require('./routes/auth'))
-
 
 const PORT = process.env.PORT || 5000
 

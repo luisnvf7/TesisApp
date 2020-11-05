@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                // user: action.payload
             }
         case REGISTER_SUCCESS:
             return {
@@ -29,7 +29,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true,
-                isLoading: false
+                isLoading: false,
+                user: action.payload.user
             }
         case AUTH_ERROR:
         case LOGIN_FAIL:
