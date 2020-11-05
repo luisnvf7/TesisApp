@@ -4,6 +4,9 @@ const pool = require("../db");
 
 const { genSaltSync, hashSync, compare } = require("bcryptjs");
 
+const passport = require('passport')
+
+
 //Registra a un usuario en la base de datos
 router.post("/registro", async (req, res) => {
   const {
@@ -60,44 +63,24 @@ router.post("/registro", async (req, res) => {
 
 router.post("/login", async (req, res) => {
 
-  const { username, password } = req.body;
+passport.authenticate('local', (err, user, info) => {
+    console.log("USER", user)
+  })(req, res)
 
-  try {
-    /* Obtener contraseña de la base de datos */
-    const user = await pool.query(
-      "SELECT * from freelancerUsuario where username_freelancer = $1",
-      [username]
-    );
-
-    if (user.rows.length == 0)
-      return res.status(422).json({ message: "Usuario no existente" });
-
-    /* Compara la contraseña con el de la db */
-    const checkCredentials = await compare(
-      password,
-      user.rows[0].password
-    );
-
-    /* Si las credenciales son correctas, se logea, de caso contrario, informar que no son correctos. */
-    if (checkCredentials) {
-
-      /* Vaciamos la contraseña para que no se envie en el front */
-      delete user.rows[0]["password"]
-
-      return res.status(200).json({
-        message: "Usuario logeado satisfactoriamente",
-        user: user.rows[0]
-      });
+  passport.authenticate('local', (err, user, info) => {
+   
+    if(user) {
+      req.login(user, () => {
+        return res.status(200).json({message: "Usuario logeado satisfactoriamente", user });
+      })
+    } else {
+      return res.status(422).json({ message : info.message })
     }
-    
-    return res
-      .status(422)
-      .json({ message: "Contraseña o usuario incorrectos" });
 
-  } catch (error) {
-    console.log("ERROR", error);
-  }
+  })(req, res)
+
 
 });
+
 
 module.exports = router;
