@@ -1,9 +1,11 @@
+/* React importaciones */
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { connect } from "react-redux";
 
-
+/* React Boostrap */
 import { Toast } from "react-bootstrap";
 
+/* CSS */
 import '../styles/PageStyles/home.css'
 
 const Home = ({ auth, history }) => {
