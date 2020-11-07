@@ -1,3 +1,4 @@
+/* React importaciones */
 import React from "react";
 
 const Register = () => {

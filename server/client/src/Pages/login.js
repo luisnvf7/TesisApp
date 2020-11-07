@@ -1,5 +1,8 @@
+/* React importaciones */
 import React, { useState, useLayoutEffect  } from "react";
 // import "../styles/PageStyles/login.css";
+
+/* React Boostrap */
 import { Row, Col } from "react-bootstrap";
 
 

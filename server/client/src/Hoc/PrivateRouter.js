@@ -1,3 +1,4 @@
+/* React importaciones */
 import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
@@ -7,7 +8,7 @@ const PrivateRoute = ({ auth, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      auth.isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
+      auth.isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
     }
   />
 );

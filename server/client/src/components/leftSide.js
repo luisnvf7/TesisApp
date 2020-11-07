@@ -1,13 +1,28 @@
+/* React importaciones */
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import KeyboardEventHandler from "react-keyboard-event-handler";
 import { connect } from "react-redux";
-import { login } from "../actions/authAction";
-import { Form, Button, Spinner } from "react-bootstrap";
-import { loadProgressBar } from "axios-progress-bar";
-import { ToastContainer, toast } from "react-toastify";
 
+/* Actions */
+import { login } from "../actions/authAction";
 import { NOT_USER } from "../actions/types";
 
+/* React Boostrap */
+import {
+  Form,
+  Button,
+  Spinner,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
+
+/* Otros */
+import { loadProgressBar } from "axios-progress-bar";
+import { ToastContainer, toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import KeyboardEventHandler from "react-keyboard-event-handler";
+
+/* CSS */
 import "axios-progress-bar/dist/nprogress.css";
 import "../styles/PageStyles/login.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,13 +53,16 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
 
   const [passwordError, setPasswordError] = useState(null);
 
+  const [isShow, setIsShow] = useState(false);
+
   const checkForm = () => {
+  
     if (usuario == "") {
       errorHandler(setUserError, "Por favor, ingrese valores en el input");
     } else if (usuario.length < 4) {
       errorHandler(setUserError, "Usuario muy corto");
     }
-    if (password == "") {
+    else if (password == "") {
       errorHandler(setPasswordError, "Por favor ingrese valores en el input");
     } else if (password.length < 4) {
       errorHandler(setPasswordError, "Contraseña muy corta");
@@ -71,10 +89,12 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
       <Form>
         <Form.Group>
           <Form.Label>Ingresa nombre de usuario</Form.Label>
-          <Form.Control
-            placeholder="usuario"
-            onChange={(e) => setUsuario(e.target.value)}
-          />
+          <div className="input-wrapper">
+            <Form.Control
+              placeholder="usuario"
+              onChange={(e) => setUsuario(e.target.value)}
+            />
+          </div>
           {userError !== null ? (
             <label style={{ color: "red" }}>{userError}</label>
           ) : null}
@@ -82,11 +102,21 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
 
         <Form.Group>
           <Form.Label>Ingresa contraseña</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="contraseña"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+
+          <InputGroup className="mb-3">
+            <Form.Control
+              type = { isShow ? null : 'password' }
+              placeholder="contraseña"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <InputGroup.Append onClick = {() => setIsShow(!isShow)} >
+              <InputGroup.Text id="basic-addon2">
+                <FontAwesomeIcon className="icon" icon={ isShow ? faEyeSlash : faEye } />
+              </InputGroup.Text>
+            </InputGroup.Append>
+          </InputGroup>
+
           {passwordError !== null ? (
             <label style={{ color: "red" }}>{passwordError}</label>
           ) : null}
