@@ -10,3 +10,25 @@
 .footer {
     background-color: #542C23;
 }
+
+
+
+@media (max-width: 991px) {
+
+.row-container {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+
+
+}
+
+@media (max-width: 861px) {
+
+    .main-container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+}

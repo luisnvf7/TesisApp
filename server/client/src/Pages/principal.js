@@ -17,6 +17,8 @@ import {
 import Navbar from "../components/navBar";
 import Categories from "../components/categories";
 import Footer from "../components/footer";
+import RightSide from "../components/rightSide";
+
 
 /* CSS */
 import "../styles/PageStyles/principal.css";
@@ -87,7 +89,7 @@ const Principal = (props) => {
       <Navbar />
       <div className="bg-success" style={{ paddingBottom: "10%" }}>
         <div>
-          <Row>
+          <Row className = "main-container">
             <Col>
               <div style={{ textAlign: "center" }}>
                 <h1 style={{ color: "white" }}>
@@ -124,7 +126,9 @@ const Principal = (props) => {
               </div>
             </Col>
             <Col>
-              <h1>Imagen aqui</h1>
+              <div style = {{ display: 'block', textAlign: 'center' }}>
+                <h1>Imagen aqui</h1>
+              </div>
             </Col>
           </Row>
         </div>
@@ -209,9 +213,9 @@ const Principal = (props) => {
         </Container>
       </div>
 
-      <Container style={{ marginTop: "30px" }}>
-        <Row>
-          <Col>
+      <Container style={{ marginTop: "30px", marginBottom: '30px' }}>
+        <Row className = "row-container">
+          <Col style = {{ marginBottom : '30px' }}>
             <h1>Lo que ofrecemos</h1>
 
             <label>
@@ -226,20 +230,13 @@ const Principal = (props) => {
             <label style={{ display: "block" }}>- Element</label>
           </Col>
 
-          <Col>
-            <h1>Imagen</h1>
+          <Col style = {{ display: 'flex', textAlign: 'center' }}>
+            <RightSide imgWidth = "100%" imgHeight = "100%" src = "https://freelancingbuzz.com/wp-content/uploads/2019/07/freelancers.jpeg" />
           </Col>
         </Row>
       </Container>
 
       <Footer />
-
-      {/* <footer className = "footer">
-        <h1>El footer</h1>
-        <div className = "bg-success" >
-          <label style = {{ display: 'block', textAlign : 'center' }}>Copyright &copy; 2021. Todos lo derechos reservados</label>
-        </div>
-      </footer> */}
     </div>
   );
 };

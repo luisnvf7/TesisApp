@@ -28,7 +28,9 @@ import "axios-progress-bar/dist/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/ComponentsStyles/LeftSide.css"
 
-const LeftSide = ({ onLogin, history, auth, error }) => {
+const LeftSide = ({ onLogin, history, auth, error, clearErrors }) => {
+
+  /* Antes de renderizar la view */
   useEffect(() => {
     if (error.id != null) {
       if (error.id == NOT_USER) {
@@ -43,6 +45,13 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
   useLayoutEffect(() => {
     if (auth.isAuthenticated) {
       history.push("/home");
+    }
+  }, []);
+
+  /* Cuando abandona la view */
+  useEffect(() => {
+    return () => {
+      clearErrors()
     }
   }, []);
 
@@ -144,7 +153,8 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
       </Button>
     </div>
   );
-};
+}
+
 
 const mapStateToProps = (state) => {
   const { auth, error } = state;
@@ -160,6 +170,9 @@ const mapDispatchToProps = (dispatch) => {
     onLogin: (usuario, password, history) => {
       dispatch(login(usuario, password, history));
     },
+    clearErrors : () => {
+      dispatch({ type : 'CLEAR_ERRORS' })
+    }
   };
 };
 

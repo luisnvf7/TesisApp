@@ -13,7 +13,7 @@ const Footer = () => {
     <footer className="footer">
       <Container className="footer-container">
         <Row>
-          <Col>
+          <Col lg = {4} sm = {6}>
             <div className="content-1">
               <label className="label-style">Contactanos</label>
               <label className="label-style">
@@ -37,7 +37,7 @@ const Footer = () => {
             </div>
           </Col>
 
-          <Col>
+          <Col lg = {4} sm = {6}>
             <div className="content-1">
               <label className="label-style">
                 {" "}
@@ -54,7 +54,7 @@ const Footer = () => {
             </div>
           </Col>
 
-          <Col>
+          <Col lg = {4} sm = {6}>
             <div>
               <Form>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -72,7 +72,7 @@ const Footer = () => {
 
       <div className="bg-success footer-final">
         <label style={{ display: "block", textAlign: "center", color: 'white' }}>
-          Copyright &copy; 2021. Todos lo derechos reservados
+          Copyright &copy; 2021. Todos los derechos reservados
         </label>
       </div>
     </footer>

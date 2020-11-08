@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import { Image, Container } from "react-bootstrap";
 
-const RightSide = ({ src }) => {
+const RightSide = ({ src, imgWidth, imgHeight }) => {
 
     return (
-        <Container style = {{ padding: 0}}>
-            <Image  style = {{ width: '70%', height: "70%" }} src = {src} />
+        <Container style = {{ padding: 0}} >
+            <Image style = {{ width: imgWidth, height: imgHeight }} src = {src} />
         </Container>
     )
 
