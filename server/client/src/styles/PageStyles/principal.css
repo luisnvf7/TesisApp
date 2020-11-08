@@ -1,0 +1,12 @@
+.center-div{
+    display: flex;
+    justify-content: center;
+}
+
+.Main-page {
+    overflow-x: hidden;
+}
+
+.footer {
+    background-color: #542C23;
+}
