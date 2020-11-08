@@ -1,28 +1,82 @@
 /* React importaciones */
 import React, { useState, useEffect, useLayoutEffect } from "react";
 
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Form, Button } from "react-bootstrap";
 
+import "../styles/ComponentsStyles/footer.css";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone, faEnvelope, faInfo } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
+  return (
+    <footer className="footer">
+      <Container className="footer-container">
+        <Row>
+          <Col>
+            <div className="content-1">
+              <label className="label-style">Contactanos</label>
+              <label className="label-style">
+                {" "}
+                <FontAwesomeIcon
+                  icon={faPhone}
+                  color="white"
+                  className="icon"
+                />{" "}
+                +58 4120055000
+              </label>
+              <label className="label-style">
+                {" "}
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  color="white"
+                  className="icon"
+                />{" "}
+                TuWork@gmail.com
+              </label>
+            </div>
+          </Col>
 
-    return (
-        <footer className = "footer">
+          <Col>
+            <div className="content-1">
+              <label className="label-style">
+                {" "}
+                <FontAwesomeIcon
+                  icon={faInfo}
+                  color="white"
+                  style={{ marginRight: "6px" }}
+                />{" "}
+                Sobre nosotros
+              </label>
+              <label className="label-style">
+                Somos una empresa jkasnjkdnjadnasndjknasjkdnjasndjkaskdnas
+              </label>
+            </div>
+          </Col>
 
-        <Container>
-            <Row>
-                <Col><div>Hola</div></Col>
-                <Col><div>Hola</div></Col>
-                <Col><div>Hola</div></Col>
-            </Row>
-        </Container>
+          <Col>
+            <div>
+              <Form>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                  <Form.Label style = {{ color: 'white' }}>Danos tu opninion</Form.Label>
+                  <Form.Control as="textarea" rows={3} />
+                </Form.Group>
+              </Form>
+              <div className = "boton-container"> 
+              <Button variant="success">Enviar</Button>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
 
-        <div className = "bg-success" >
-          <label style = {{ display: 'block', textAlign : 'center' }}>Copyright &copy; 2021. Todos lo derechos reservados</label>
-        </div>
-      </footer>
-    )
+      <div className="bg-success footer-final">
+        <label style={{ display: "block", textAlign: "center", color: 'white' }}>
+          Copyright &copy; 2021. Todos lo derechos reservados
+        </label>
+      </div>
+    </footer>
+  );
+};
 
-}
-
-export default Footer
+export default Footer;
