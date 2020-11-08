@@ -1,0 +1,17 @@
+.card-style {
+    margin-bottom: 20px;
+}
+
+.image {
+    height: 170px;
+}
+
+@media (max-width:575px) {
+
+    .image {
+        height: 350px;
+    }
+
+
+}
+

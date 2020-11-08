@@ -19,7 +19,7 @@ const Login = (props) => {
           <LeftSide history = { props.history } />
         </Col>
         <Col>
-          <RightSide />
+          <RightSide src = "https://www.rhpaenews.com/wp-content/uploads/2018/10/6-herramientas-digitales-freelance.jpg" />
         </Col>
       </Row>
     </div>

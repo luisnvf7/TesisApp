@@ -13,6 +13,7 @@ import {
   Spinner,
   InputGroup,
   FormControl,
+  Alert
 } from "react-bootstrap";
 
 /* Otros */
@@ -24,8 +25,8 @@ import KeyboardEventHandler from "react-keyboard-event-handler";
 
 /* CSS */
 import "axios-progress-bar/dist/nprogress.css";
-import "../styles/PageStyles/login.css";
 import "react-toastify/dist/ReactToastify.css";
+import "../styles/ComponentsStyles/LeftSide.css"
 
 const LeftSide = ({ onLogin, history, auth, error }) => {
   useEffect(() => {
@@ -56,17 +57,20 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
   const [isShow, setIsShow] = useState(false);
 
   const checkForm = () => {
-  
+
+    if (usuario == "" && password == "") {
+      errorHandler(setUserError, "Por favor, ingrese valores en el input");
+      errorHandler(setPasswordError, "Por favor ingrese valores en el input");
+    }
     if (usuario == "") {
       errorHandler(setUserError, "Por favor, ingrese valores en el input");
     } else if (usuario.length < 4) {
       errorHandler(setUserError, "Usuario muy corto");
-    }
-    else if (password == "") {
+    } else if (password == "") {
       errorHandler(setPasswordError, "Por favor ingrese valores en el input");
     } else if (password.length < 4) {
       errorHandler(setPasswordError, "Contraseña muy corta");
-    } else {
+    }  else {
       onLogin(usuario, password, history);
     }
   };
@@ -96,7 +100,12 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
             />
           </div>
           {userError !== null ? (
-            <label style={{ color: "red" }}>{userError}</label>
+            <div>
+              <Alert variant = 'danger'> 
+                {userError}
+            </Alert>
+            </div>
+
           ) : null}
         </Form.Group>
 
@@ -118,7 +127,11 @@ const LeftSide = ({ onLogin, history, auth, error }) => {
           </InputGroup>
 
           {passwordError !== null ? (
-            <label style={{ color: "red" }}>{passwordError}</label>
+            <div>
+              <Alert variant = 'danger'> 
+                {passwordError}
+            </Alert>
+            </div>
           ) : null}
         </Form.Group>
 
