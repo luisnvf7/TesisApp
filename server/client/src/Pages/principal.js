@@ -17,6 +17,8 @@ import {
 import Navbar from "../components/navBar";
 import Categories from "../components/categories";
 import Footer from "../components/footer";
+import RightSide from "../components/rightSide";
+
 
 /* CSS */
 import "../styles/PageStyles/principal.css";
@@ -54,8 +56,20 @@ const Principal = (props) => {
     {
       titulo: "Administracion",
       src:
-        "https://lh3.googleusercontent.com/proxy/-FWBfipG86LclaRrpCcMjSm6AvRI7oNoAyiMQJwuzyMzVb6ewyqgdlHbkDnwGljYEO1t8kMOAyV22bY4PlbpSj7ysahWj4m-LuwPmpXpoUH3Ay4tOlS98bM96vKm9pSwBA",
+        "https://www.grouphealth.ca/wp-content/uploads/2019/12/working-on-plan-administration.jpg",
     },
+    {
+      titulo : "Ingenieria",
+      src: 'https://blogs.ucontinental.edu.pe/wp-content/uploads/2017/05/arquitectura-ingenieria-civil.jpg'
+    },
+    {
+      titulo: 'Idiomas',
+      src: 'https://www.ecestaticos.com/image/clipping/39db19382aa7eb27f590d33dba6b1f11/opening.jpg'
+    },
+    {
+      titulo: 'Leyes',
+      src: 'https://www.caraotadigital.net/wp-content/uploads/2019/06/1487244022_000495_1487244627_noticia_normal.jpg'
+    }
   ]);
 
   const search = () => {
@@ -73,17 +87,19 @@ const Principal = (props) => {
   return (
     <div className="Main-page">
       <Navbar />
-      <div className="bg-success" style={{ paddingBottom: "10%" }}>
+      <div className="bg-success" style={{ paddingBottom: "5%" }}>
         <div>
-          <Row>
+          <Row className = "main-container">
             <Col>
-              <div style={{ textAlign: "center" }}>
+            <div className = "center-div">
+
+                <div className = "text-container">
+
                 <h1 style={{ color: "white" }}>
                   Encuentra el talento que <br></br> necesitas{" "}
                 </h1>
-              </div>
+                </div>
 
-              <div className="center-div">
                 <InputGroup className="mb-3" style={{ width: "70%" }}>
                   <InputGroup.Text id="basic-addon1">
                     {isLoading ? (
@@ -109,10 +125,15 @@ const Principal = (props) => {
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
-              </div>
+            </div>
             </Col>
             <Col>
-              <h1>Imagen aqui</h1>
+              <div className = "img-container">
+                  
+              <Image src = '/work.svg' className = "img" />
+
+                
+              </div>
             </Col>
           </Row>
         </div>
@@ -197,9 +218,9 @@ const Principal = (props) => {
         </Container>
       </div>
 
-      <Container style={{ marginTop: "30px" }}>
-        <Row>
-          <Col>
+      <Container style={{ marginTop: "30px", marginBottom: '30px' }}>
+        <Row className = "row-container">
+          <Col style = {{ marginBottom : '30px' }}>
             <h1>Lo que ofrecemos</h1>
 
             <label>
@@ -214,20 +235,13 @@ const Principal = (props) => {
             <label style={{ display: "block" }}>- Element</label>
           </Col>
 
-          <Col>
-            <h1>Imagen</h1>
+          <Col style = {{ display: 'flex', textAlign: 'center' }}>
+            <RightSide imgWidth = "100%" imgHeight = "100%" src = "https://freelancingbuzz.com/wp-content/uploads/2019/07/freelancers.jpeg" />
           </Col>
         </Row>
       </Container>
 
       <Footer />
-
-      {/* <footer className = "footer">
-        <h1>El footer</h1>
-        <div className = "bg-success" >
-          <label style = {{ display: 'block', textAlign : 'center' }}>Copyright &copy; 2021. Todos lo derechos reservados</label>
-        </div>
-      </footer> */}
     </div>
   );
 };
