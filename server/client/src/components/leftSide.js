@@ -134,7 +134,11 @@ const LeftSide = ({ onLogin, history, auth, error, clearErrors }) => {
               </InputGroup.Text>
             </InputGroup.Append>
           </InputGroup>
+          
 
+            <TransitionGroup>
+
+          <CSSTransition time = {300} className = "fade">
           {passwordError !== null ? (
             <div>
               <Alert variant = 'danger'> 
@@ -142,6 +146,9 @@ const LeftSide = ({ onLogin, history, auth, error, clearErrors }) => {
             </Alert>
             </div>
           ) : null}
+          </CSSTransition>
+
+            </TransitionGroup>
         </Form.Group>
 
         <Button onClick={() => checkForm()}>Ingresar</Button>

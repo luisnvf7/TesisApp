@@ -22,18 +22,14 @@ import {
 /* Otros */
 import { loadProgressBar } from "axios-progress-bar";
 import { ToastContainer, toast } from "react-toastify";
-import {
-  faUser,
-  faEyeSlash,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import KeyboardEventHandler from "react-keyboard-event-handler";
+import { Spring, Transition } from "react-spring/renderprops";
 
 /* CSS */
 import "axios-progress-bar/dist/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const Login = ({ onLogin, history, auth, error, clearErrors }) => {
   /* Antes de renderizar la view */
@@ -46,6 +42,8 @@ const Login = ({ onLogin, history, auth, error, clearErrors }) => {
       }
     }
   }, [error]);
+
+  const items = [1, 2, 34, 5, 6, 77];
 
   /* Antes de que renderice en el dom */
   useLayoutEffect(() => {
@@ -104,10 +102,8 @@ const Login = ({ onLogin, history, auth, error, clearErrors }) => {
         onKeyEvent={(key, e) => onLogin(usuario, password, history)}
       />
 
-      <div
-      className = "page-container"
-      >
-        <Card className = "card-container" >
+      <div className="page-container">
+        <Card className="card-container">
           <Card.Body>
             <Form.Label>Usuario</Form.Label>
             <InputGroup className="mb-3">
@@ -122,13 +118,29 @@ const Login = ({ onLogin, history, auth, error, clearErrors }) => {
                 aria-describedby="basic-addon1"
                 onChange={(e) => setUsuario(e.target.value)}
               />
-             
             </InputGroup>
-            {userError !== null ? (
-                <div>
-                  <Alert variant="danger">{userError}</Alert>
-                </div>
-              ) : null}
+            {/* {userError !== null ? (
+              <div>
+                <Alert variant="danger">{userError}</Alert>
+              </div>
+            ) : null} */}
+
+            <Transition
+              items={userError !== null}
+              from={{ opacity: 0 }}
+              enter={{ opacity: 1 }}
+              leave={{ opacity: 0 }}
+            >
+              {(show) =>
+                show &&
+                ((props) => (
+                  <div style={props}>
+                    <Alert variant="danger">{userError}</Alert>
+                  </div>
+                ))
+              }
+            </Transition>
+
             <Form.Label>Contraseña</Form.Label>
 
             <InputGroup className="mb-3">
@@ -143,11 +155,43 @@ const Login = ({ onLogin, history, auth, error, clearErrors }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </InputGroup>
-            {passwordError !== null ? (
+
+            {/* {passwordError !== null ? (
+              <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                {(props) => (
+                  <div style={props}>
+                    {" "}
+                    <Alert variant="danger">{passwordError}</Alert>
+                  </div>
+                )}
+              </Spring>
+            ) : null} */}
+
+            <Transition
+              items={passwordError !== null}
+              from={{ opacity: 0 }}
+              enter={{ opacity: 1 }}
+              leave={{ opacity: 0 }}
+            >
+              {(show) =>
+                show &&
+                ((props) => (
+                  <div style={props}>
+                    <Alert variant="danger">{passwordError}</Alert>
+                  </div>
+                ))
+              }
+            </Transition>
+
+            {/* <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}  >
+              {(props) => <div style={props}></div>}
+            </Spring> */}
+
+            {/* {passwordError !== null ? (
               <div>
                 <Alert variant="danger">{passwordError}</Alert>
               </div>
-            ) : null}
+            ) : null} */}
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 onClick={() => checkForm()}
@@ -164,7 +208,11 @@ const Login = ({ onLogin, history, auth, error, clearErrors }) => {
                 marginTop: "2%",
               }}
             >
-              <Button onClick={() => history.push("/registro")} style={{ width: "100%" }} variant="success">
+              <Button
+                onClick={() => history.push("/registro")}
+                style={{ width: "100%" }}
+                variant="success"
+              >
                 Registrarse
               </Button>
               <ToastContainer />

@@ -56,7 +56,7 @@ const Principal = (props) => {
     {
       titulo: "Administracion",
       src:
-        "https://lh3.googleusercontent.com/proxy/-FWBfipG86LclaRrpCcMjSm6AvRI7oNoAyiMQJwuzyMzVb6ewyqgdlHbkDnwGljYEO1t8kMOAyV22bY4PlbpSj7ysahWj4m-LuwPmpXpoUH3Ay4tOlS98bM96vKm9pSwBA",
+        "https://www.grouphealth.ca/wp-content/uploads/2019/12/working-on-plan-administration.jpg",
     },
     {
       titulo : "Ingenieria",
@@ -87,17 +87,19 @@ const Principal = (props) => {
   return (
     <div className="Main-page">
       <Navbar />
-      <div className="bg-success" style={{ paddingBottom: "10%" }}>
+      <div className="bg-success" style={{ paddingBottom: "5%" }}>
         <div>
           <Row className = "main-container">
             <Col>
-              <div style={{ textAlign: "center" }}>
+            <div className = "center-div">
+
+                <div className = "text-container">
+
                 <h1 style={{ color: "white" }}>
                   Encuentra el talento que <br></br> necesitas{" "}
                 </h1>
-              </div>
+                </div>
 
-              <div className="center-div">
                 <InputGroup className="mb-3" style={{ width: "70%" }}>
                   <InputGroup.Text id="basic-addon1">
                     {isLoading ? (
@@ -123,11 +125,14 @@ const Principal = (props) => {
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
-              </div>
+            </div>
             </Col>
             <Col>
-              <div style = {{ display: 'block', textAlign: 'center' }}>
-                <h1>Imagen aqui</h1>
+              <div className = "img-container">
+                  
+              <Image src = '/work.svg' className = "img" />
+
+                
               </div>
             </Col>
           </Row>
