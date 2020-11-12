@@ -1,0 +1,52 @@
+.rubro-page-style {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+.card-rubro {
+    width: 80%
+}
+
+
+.selected {
+    border-color: #3AAD0F;
+    border-width: 3px;
+}
+
+.rubro-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.style-icon-rubro {
+    display: flex;
+    justify-content: flex-end;
+    color: green
+}
+
+.label-rubro {
+    width: 100%;
+}
+
+.input-rubro {
+    padding: 20px
+}
+
+.right-rubro {
+    display: flex;
+    justify-content: space-around;
+}
+
+.buttons-rubro {
+    display:flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-rubro{
+    border-radius: 20px;
+}

@@ -34,11 +34,30 @@ const RegisterProfesional = (props) => {
   const [isShowPass2, setIsShowPass2] = useState(true);
 
   const [states, setStates] = useState([
-    "Zulia",
-    "Maracay",
-    "Caracas",
-    "Barquisimeto",
-  ]);
+    "Amazonas",
+    "Anzoategui",
+    "Aragua",
+    "Barinas",
+    "Bolivar",
+    "Carabobo",
+    "Cojedes",
+    "Delta Amacuro",
+    "Distrito Capital",
+    "Falcon",
+    "Guarico",
+    "Lara",
+    "Merida",
+    "Miranda",
+    "Monagas",
+    "Nueva Esparta",
+    "Portuguesa",
+    "Sucre",
+    "Tachira",
+    "Trujillo",
+    "La Guaira",
+    "Yaracuy",
+    "Zulia"
+    ]);
 
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -62,6 +81,8 @@ const RegisterProfesional = (props) => {
   const [stateError, setStateError] = useState(null);
 
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+
+  let copyStates = [...states]
 
   const stateChange = (v) => {
     setSelectedState(v);
@@ -98,6 +119,11 @@ const RegisterProfesional = (props) => {
 
   const registrarse = () => {
     checkForm();
+
+    /* Logica de api */
+    
+
+    props.history.push('/registro/postregister')
 
     console.log("REGISTRO", userInfo);
   };
@@ -256,7 +282,14 @@ const RegisterProfesional = (props) => {
                 {selectedState}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu style={{ width: "100%" }}>
+              <Dropdown.Menu style={{ width: "100%"}} className = "dropdown-register">
+                <div style = {{  display: 'flex', justifyContent: 'center' }}>
+
+              <FormControl style = {{ width: '90%' }}
+                placeholder="Ingrese ciudad"
+                onChange={ (e) => setStates(states.filter( (v) => v.includes(e.target.value) ) )  }
+              />
+                </div>
                 {states.map((value) => (
                   <Dropdown.Item onClick={() => stateChange(value)}>
                     {value}

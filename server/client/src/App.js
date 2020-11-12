@@ -16,6 +16,8 @@ import Home from './Pages/home'
 import Principal from './Pages/principal'
 import RegisterProfesional from './Pages/registerProfesional'
 import RegistroBusiness from './Pages/registerBusiness'
+import PostRegister from './Pages/postRegisterPage'
+import Rubro from './Pages/rubroPage'
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
         <Route exact path="/registro" component={Register} />
         <Route path = "/registro/profesional" component = {RegisterProfesional} />
         <Route path = "/registro/empresa" component = {RegistroBusiness} />
+        <Route path = "/registro/postregister" component = {PostRegister} />
+        <Route path = "/registro/rubro" component = {Rubro} />
         <PrivateRoute path = "/home" component={Home} />
       </div>
     </BrowserRouter>
