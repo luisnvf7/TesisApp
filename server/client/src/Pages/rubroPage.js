@@ -20,9 +20,14 @@ import {
 
 /* Font-awesome */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faSearch,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Rubro = (props) => {
+  /* Peticion a la base de datos */
   const [rubros, setRubros] = useState([
     "Programacion y tecnologia",
     "Diseño y multimedia",
@@ -43,13 +48,48 @@ const Rubro = (props) => {
     "mas de 7 años",
   ]);
 
+  const [chips, setChips] = useState([]);
+
+  const[textInput, setTextInput] = useState("")
+
+  const [disableButton, setDisableButton] = useState(false)
+
+  const [colors, setColors] = useState (["#1878D7", "#D71843", "#B418D7", "#18D735"])
+
+  const[infoUser, setInfoUser] = useState ({
+    rubro: '',
+    areas: [],
+    experiencia: ''
+  }) 
+
   const rubroSelected = (rubro, index) => {
-    console.log("RUBRO", rubro);
-
-    console.log("INDEX", index);
-
+    
     setRubroIndex(index);
   };
+
+  const onChangeText = (value) => {
+    setTextInput(value)
+  };
+
+  const addTag = () => {
+
+
+    if(chips.length >= 3) {
+      setDisableButton(true)
+    }
+
+    setChips(oldArray => [...oldArray, { value : textInput, colors: colors[Math.floor(Math.random() * 4) + 0 ]  } ] )
+  }
+
+  const deleteChip = (i) => {
+
+    setChips( chips.filter((v, index) =>  index !== i ))
+
+    if(chips.length < 5) {
+      setDisableButton(false)
+    }
+
+  }
 
   return (
     <div style={{ height: "100vh" }}>
@@ -105,6 +145,7 @@ const Rubro = (props) => {
                         <FormControl
                           placeholder="Buscar Area"
                           className="input-rubro"
+                          onChange={(e) => onChangeText(e.target.value)}
                         />
                         <InputGroup.Append>
                           <InputGroup.Text id="basic-addon2">
@@ -132,18 +173,34 @@ const Rubro = (props) => {
                           </Dropdown.Menu>
                         </Dropdown>
 
-                        <Button className="button-rubro">Agregar</Button>
+                        <Button className="button-rubro" disabled={disableButton} onClick = { () => addTag() }>Agregar</Button>
                       </div>
                     </Col>
                   </Row>
                 </div>
               ) : null}
-            
-            <div className = "buttons-rubro">
-               <Button className="button-rubro">Anterior</Button>
-               <Button className="button-rubro">Siguiente</Button>
-            </div>
 
+              {  chips.length > 0 ? (<div className="chips-rubro">
+                {chips.map((v, i) => {
+                  return (
+                    <div className="chips-container" style = {{ backgroundColor: v.colors }}>
+                      <div className="chip-element-rubro">
+                        <label>{v.value}</label>
+                        <FontAwesomeIcon
+                          className="icon-rubro-container"
+                          icon={faTimesCircle}
+                          onClick = { () =>  deleteChip(i) }
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>) : null  }
+              
+              <div className="buttons-rubro">
+                <Button onClick = { () => props.history.push('/registro/postregister') } className="button-rubro">Anterior</Button>
+                <Button disabled = { chips.length <= 0 ? true : false } className="button-rubro">Siguiente</Button>
+              </div>
             </Container>
           </Card.Body>
         </Card>

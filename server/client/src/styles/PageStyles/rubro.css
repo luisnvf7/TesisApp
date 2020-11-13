@@ -1,52 +1,72 @@
 .rubro-page-style {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .card-rubro {
-    width: 80%
+  width: 80%;
 }
 
-
 .selected {
-    border-color: #3AAD0F;
-    border-width: 3px;
+  border-color: #3aad0f;
+  border-width: 3px;
 }
 
 .rubro-container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .style-icon-rubro {
-    display: flex;
-    justify-content: flex-end;
-    color: green
+  display: flex;
+  justify-content: flex-end;
+  color: green;
 }
 
 .label-rubro {
-    width: 100%;
+  width: 100%;
 }
 
 .input-rubro {
-    padding: 20px
+  padding: 20px;
 }
 
 .right-rubro {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .buttons-rubro {
-    display:flex;
-    justify-content: space-between;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.button-rubro{
-    border-radius: 20px;
+.button-rubro {
+  border-radius: 20px;
 }
+
+.chips-rubro {
+  display: flex;
+}
+
+.chips-container {
+  /* background-color: #d7186c; */
+  margin-left: 30px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 40px;
+  color: white;
+  display: flex;
+}
+
+.icon-rubro-container {
+    margin-left: 3px;
+}
+
+.chip-element-rubro {
+    margin-top: 3px;
+}
+

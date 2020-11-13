@@ -7,6 +7,7 @@ import "../styles/PageStyles/postRegister.css";
 /* React Boostrap */
 import { Card, Button, Container, Row, Col, Alert, Image } from "react-bootstrap";
 
+
 const PostRegister = (props) => {
 
 
@@ -20,7 +21,7 @@ const PostRegister = (props) => {
           <Card.Body>
             <Container>
               <Row>
-                <Col lg={8} md = {12} >
+                <Col lg={8} md = {12} className = "left-content-post" >
                   <h3 style = {{ textAlign: 'center' }}>Hola (nombre) bienvenido a (Nombre pagina)</h3>
                   <label style = {{ marginTop: '10px' }}>
                     Aqui te ayudaremos a crear tu perfil como freelancer para
@@ -46,8 +47,8 @@ const PostRegister = (props) => {
                     Entendido
                   </label>
                 </Col>
-                <Col lg={4} md = {12}>
-                    <Image className = "img-container-post" src="https://lh3.googleusercontent.com/proxy/Fi_H3_ikergy8cO5kqRFxnaDW0X5-aecRsncuNn6X65WvQQnZ5yCkgIKSly9rwEFT7bXddVy_FpyZZcd_zjE-_KYOlg1W4D9QEXdk3TaVf34T-l2o4UBfSdk2z8HtNKfKlcy843bEq_9V3S9TuY9QsD3z5Emjg" fluid />     
+                <Col lg={4} md = {12} className = "right-content-post">
+                    <Image className = "img-container-post" src="https://consejos-de.com/wp-content/uploads/2018/05/working-3406785_640-compressor.jpg" fluid />     
                     <div className = "boton-contenedor">    
                     <Button onClick = { () => props.history.push('/registro/rubro')  } style = {{ marginTop: '10%', borderRadius: '20px' }} variant="success" disabled = {isDisable}>Comenzar</Button>
                     </div>   
