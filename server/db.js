@@ -5,7 +5,7 @@ const pool = new Pool({
     password: "12345",
     host: "localhost",
     port: 5433,
-    database: "TesisApp"
+    database: "PruebaTesis"
 })  
 
 

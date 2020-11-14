@@ -11,7 +11,6 @@ const cookieParser = require('cookie-parser')
 
 const initializePassport = require('./passport.Config')
 
-
 //Middlewares
 app.use(express.json())
 app.use(cors())
@@ -31,6 +30,8 @@ initializePassport(passport)
 
 //Rutas
 app.use(require('./routes/auth'))
+app.use(require('./routes/rubro'))
+app.use(require('./routes/area'))
 
 const PORT = process.env.PORT || 5000
 

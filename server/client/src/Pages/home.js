@@ -9,6 +9,7 @@ import { Toast } from "react-bootstrap";
 import "../styles/PageStyles/home.css";
 
 const Home = ({ auth, history }) => {
+  
   const [toast, setToast] = useState(true);
 
   const [count, setCount] = useState(0);
