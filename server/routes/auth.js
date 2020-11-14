@@ -12,7 +12,7 @@ router.post("/registro", async (req, res) => {
   const {
     username,
     password,
-    repeatedpass,
+    // repeatedpass,
     nombre,
     apellido,
     fecha_nacimiento,
@@ -60,6 +60,7 @@ router.post("/registro", async (req, res) => {
     console.log("ERROR", err);
   }
 });
+
 
 router.post("/login", async (req, res) => {
 

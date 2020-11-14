@@ -1,6 +1,9 @@
 /* React importaciones */
 import React, { useEffect, useState } from "react";
 
+import { connect } from "react-redux";
+
+
 /* React Boostrap */
 import {
   Card,
@@ -28,6 +31,7 @@ import { Link } from "react-router-dom";
 import "../styles/PageStyles/registerProfesional.css";
 
 import { Spring, Transition } from "react-spring/renderprops";
+import { register } from "../actions/authAction";
 
 const RegisterProfesional = (props) => {
   const [isShowPass1, setIsShowPass1] = useState(true);
@@ -121,9 +125,10 @@ const RegisterProfesional = (props) => {
     checkForm();
 
     /* Logica de api */
-    
+    props.onRegister(userInfo, props.history)
+    console.log("PROPS", props)
 
-    props.history.push('/registro/postregister')
+    // props.history.push('/registro/postregister')
 
     console.log("REGISTRO", userInfo);
   };
@@ -333,4 +338,24 @@ const RegisterProfesional = (props) => {
   );
 };
 
-export default RegisterProfesional;
+// const mapStateToProps = (state) => {
+//   const { auth, error } = state;
+
+//   return {
+//     auth,
+//     error,
+//   };
+// };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegister: (user, history) => {
+      dispatch(register(user, history));
+    },
+    clearErrors: () => {
+      dispatch({ type: "CLEAR_ERRORS" });
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)( RegisterProfesional );
