@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 /* Actions */
 import { getRubros } from '../actions/rubroActions'
 import {  getAreas } from '../actions/areasActions'
+import { sendAreas } from '../actions/areasActions'
 
 
 /* CSS */
@@ -41,17 +42,17 @@ const Rubro = (props) => {
    props.onGetRubros()    
   }, [])
 
-  /* Peticion a la base de datos */
-  const [rubros, setRubros] = useState([
-    "Programacion y tecnologia",
-    "Diseño y multimedia",
-    "Redaccion y traduccion",
-    "Marketing digital y ventas",
-    "Soporte administrativo",
-    "Legal",
-    "Finanzas y Negocios",
-    "Ingenieria y Arquitectura",
-  ]);
+  // /* Peticion a la base de datos */
+  // const [rubros, setRubros] = useState([
+  //   "Programacion y tecnologia",
+  //   "Diseño y multimedia",
+  //   "Redaccion y traduccion",
+  //   "Marketing digital y ventas",
+  //   "Soporte administrativo",
+  //   "Legal",
+  //   "Finanzas y Negocios",
+  //   "Ingenieria y Arquitectura",
+  // ]);
 
   const [rubroIndex, setRubroIndex] = useState(null);
 
@@ -72,13 +73,16 @@ const Rubro = (props) => {
 
   const [estadoChip, setEstadoChip] = useState("new")
 
+  const [send, setSend] = useState(false)
+
   useEffect(() => {
 
     if( chips.length > 0 && estadoChip === "new") {
 
       let value = {
         area: chips[chips.length-1].value,
-        experiencia: experienciaTemp
+        experiencia: experienciaTemp,
+        id: chips[chips.length-1].id
       }
 
       setInfoUser(oldValues =>  ( { ...oldValues, info : [...oldValues.info, value] } ))
@@ -102,6 +106,17 @@ const Rubro = (props) => {
     rubro: "",
     info: []
   });
+
+  useEffect(() => {
+
+    if(send) {
+
+      console.log("INFO USER", infoUser)
+      props.onSendAreas(infoUser, props.auth, props.history)
+      
+    }
+
+  }, [infoUser])
 
   const [value, setValue] = useState("");
 
@@ -132,11 +147,15 @@ const Rubro = (props) => {
 
     let checkIfExist = chips.find((v) => v.value === value)
 
+    
+    let id_current = props.areas.find((v) => v.nombre === value )
+    
+
     if (!checkIfExist) {
       
       setChips((oldArray) => [
         ...oldArray,
-        { value, colors: colors[Math.floor(Math.random() * 4) + 0]},
+        { value, colors: colors[Math.floor(Math.random() * 4) + 0], id: id_current.area_id},
       ]);
   
   
@@ -148,6 +167,8 @@ const Rubro = (props) => {
   };  
 
   const onSaveUser =  () => {
+
+    setSend(true)
 
     /* Llevar a Redux */
     setInfoUser(oldValue =>  ( {...oldValue, rubro: rubroValue } ) )
@@ -170,20 +191,6 @@ const Rubro = (props) => {
       setDisableButton(false);
     }
   };
-
-  // const languages = [
-  //   {
-  //     name: "C",
-  //     year: 1972,
-  //   },
-  //   {
-  //     name: "Elm",
-  //     year: 2012,
-  //   },
-  //   {
-  //     name: "E",
-  //   },
-  // ];
 
   const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
@@ -220,12 +227,10 @@ const Rubro = (props) => {
 
   return (
     <div style={{ height: "100vh" }}>
-      {    console.log("PROPS PRUEBA", props)
- }
       <div className="rubro-page-style">
         <Card className="card-rubro">
           <Card.Body>
-            <h1>(Nombre), listo para trabajar?</h1>
+            <h1>{props.auth !== null ? props.auth.nombre_completo : null }, listo para trabajar?</h1>
             <label>Indicanos cuales son tus habilidades.</label>
             <br />
             <label>
@@ -376,13 +381,12 @@ const Rubro = (props) => {
 
 const mapStateToProps = (state) => {
 
-  const { rubros, areas } = state
-
-  console.log("RUBROS", rubros)
+  const { rubros, areas, auth } = state
 
   return {
     rubros: rubros.rubros,
-    areas: areas.areas
+    areas: areas.areas,
+    auth: auth.user
   }
 
 };
@@ -395,6 +399,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onGetAreas: (rubro_id) => {
       dispatch(getAreas(rubro_id))
+    },
+    onSendAreas : (data, user, history) => {
+      dispatch(sendAreas(data, user, history))
     }
   }
 

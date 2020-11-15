@@ -32,8 +32,23 @@ import "../styles/PageStyles/registerProfesional.css";
 
 import { Spring, Transition } from "react-spring/renderprops";
 import { register } from "../actions/authAction";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const RegisterProfesional = (props) => {
+
+  useEffect(() => {
+
+    console.log("PROPS", props)
+
+    if (props.error.id != null) {
+      console.log("ERROR", props.error)
+      toast.error(props.error.msg.message)
+      props.clearErrors()
+    }
+
+  }, [props.error])
+
   const [isShowPass1, setIsShowPass1] = useState(true);
   const [isShowPass2, setIsShowPass2] = useState(true);
 
@@ -98,19 +113,22 @@ const RegisterProfesional = (props) => {
       errorHandler(setNameError, "Por favor, ingrese un nombre");
       console.log("User vacio");
     }
-    if (userInfo.username === "") {
+    else if (userInfo.username === "") {
       errorHandler(setUsernameError, "Por favor, ingrese un nombre de usuario");
       console.log("Username vacio");
     }
-    if (userInfo.password === "") {
+    else if (userInfo.password === "") {
       errorHandler(setPasswordError, "Por favor, ingrese una contraseña");
       console.log("Password vacio");
     }
-    if (userInfo.state === "") {
+    else if (userInfo.state === "") {
       errorHandler(setStateError, "Por favor, ingrese una fecha");
     }
-    if (userInfo.password !== confirmPassword && userInfo.password.length > 0) {
+    else if (userInfo.password !== confirmPassword && userInfo.password.length > 0) {
       errorHandler(setConfirmPasswordError, "Contraseñas no coinciden");
+    } else {
+      props.onRegister(userInfo, props.history)
+
     }
   };
 
@@ -122,15 +140,8 @@ const RegisterProfesional = (props) => {
   };
 
   const registrarse = () => {
+
     checkForm();
-
-    /* Logica de api */
-    props.onRegister(userInfo, props.history)
-    console.log("PROPS", props)
-
-    // props.history.push('/registro/postregister')
-
-    console.log("REGISTRO", userInfo);
   };
 
   return (
@@ -320,6 +331,8 @@ const RegisterProfesional = (props) => {
             >
               Registrarse
             </Button>
+            <ToastContainer />
+
 
             <hr />
 
@@ -338,14 +351,16 @@ const RegisterProfesional = (props) => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   const { auth, error } = state;
+const mapStateToProps = (state) => {
 
-//   return {
-//     auth,
-//     error,
-//   };
-// };
+  const { auth, error } = state;
+
+  return {
+    auth,
+    error,
+  };
+
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -358,4 +373,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)( RegisterProfesional );
+export default connect(mapStateToProps, mapDispatchToProps)( RegisterProfesional );

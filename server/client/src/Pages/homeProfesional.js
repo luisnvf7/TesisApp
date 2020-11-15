@@ -8,12 +8,11 @@ import { Toast } from "react-bootstrap";
 /* CSS */
 import "../styles/PageStyles/home.css";
 
-const Home = ({ auth, history }) => {
+const HomeProfesional = ({ auth, history }) => {
   
   const [toast, setToast] = useState(true);
 
   const [count, setCount] = useState(0);
-
 
   useEffect(() => {
     setTimeout(() => {
@@ -32,7 +31,7 @@ const Home = ({ auth, history }) => {
 
   return (
     <div>
-      <Toast
+      {/* <Toast
         className="toast"
         animation={true}
         show={toast}
@@ -46,18 +45,20 @@ const Home = ({ auth, history }) => {
           Hola, {auth.user.nombre} espero que estes teniendo un maravilloso
           dia!.
         </Toast.Body>
-      </Toast>
+      </Toast> */}
       <h1>Home</h1>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
+
   const { auth } = state;
 
   return {
     auth,
   };
+  
 };
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, null)(HomeProfesional);

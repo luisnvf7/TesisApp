@@ -86,7 +86,7 @@ const Principal = (props) => {
 
   return (
     <div className="Main-page">
-      <Navbar />
+      <Navbar type = "home" />
       <div className="bg-success" style={{ paddingBottom: "5%" }}>
         <div>
           <Row className = "main-container">

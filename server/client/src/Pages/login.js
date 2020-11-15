@@ -96,13 +96,14 @@ const Login = ({ onLogin, history, auth, error, clearErrors }) => {
 
   return (
     <div>
+     
+      <div className="page-container">
       {loadProgressBar()}
       <KeyboardEventHandler
         handleKeys={["enter"]}
         onKeyEvent={(key, e) => onLogin(usuario, password, history)}
       />
 
-      <div className="page-container">
         <Card className="card-container">
           <Card.Body>
             <Form.Label>Usuario</Form.Label>

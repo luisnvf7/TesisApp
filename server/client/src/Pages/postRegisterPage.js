@@ -1,6 +1,9 @@
 /* React importaciones */
 import React, { useEffect, useState } from "react";
 
+import { connect } from "react-redux";
+
+
 /* CSS */
 import "../styles/PageStyles/postRegister.css";
 
@@ -10,19 +13,18 @@ import { Card, Button, Container, Row, Col, Alert, Image } from "react-bootstrap
 
 const PostRegister = (props) => {
 
-
     const [isDisable, setIsDisable] = useState(true)
-
 
   return (
     <div style={{ height: "100vh" }}>
+      { console.log("PROPS", props) }
       <div className="content-container">
         <Card className = "card-style-post">
           <Card.Body>
             <Container>
               <Row>
                 <Col lg={8} md = {12} className = "left-content-post" >
-                  <h3 style = {{ textAlign: 'center' }}>Hola (nombre) bienvenido a (Nombre pagina)</h3>
+                  <h3 style = {{ textAlign: 'center' }}>Hola {  props.auth !== null ? props.auth.nombre_completo : null  } bienvenido a (Nombre pagina)</h3>
                   <label style = {{ marginTop: '10px' }}>
                     Aqui te ayudaremos a crear tu perfil como freelancer para
                     que consigas tu primer proyecto. Sigue estos pasos, y llena
@@ -62,4 +64,22 @@ const PostRegister = (props) => {
   );
 };
 
-export default PostRegister;
+const mapStateToProps = (state) => {
+
+  console.log("STATE", state)
+
+  const {  auth  } = state
+
+  return {
+    auth: auth.user
+  }
+
+}
+
+// const mapDispatchToProps = (dispatch) => {
+
+
+
+// }
+
+export default connect(mapStateToProps, null) (PostRegister);

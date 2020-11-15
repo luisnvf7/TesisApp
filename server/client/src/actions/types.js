@@ -19,3 +19,7 @@ export const GET_RUBROS = 'GET_RUBROS'
 
 /* Areas */
 export const GET_AREAS = 'GET_AREAS'
+export const SEND_AREAS = 'SEND_AREAS'
+
+/* Render */
+export const SET_RENDER = 'SET_RENDER'
