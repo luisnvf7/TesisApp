@@ -10,6 +10,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  LOGOUT_SUCCESS
 } from "../actions/types";
 
 import { returnErrors } from "./errorActions";
@@ -93,3 +94,14 @@ export const register = (user, history) => async (dispatch) => {
     }
   }
 };
+
+export const logOut = (history) => async (dispatch) => {
+
+  let resp = await axios.get('/logout')
+
+  dispatch({ type: LOGOUT_SUCCESS })
+
+  localStorage.removeItem('user')
+
+
+}

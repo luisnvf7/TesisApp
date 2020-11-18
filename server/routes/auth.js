@@ -32,11 +32,12 @@ router.post("/registro", async (req, res) => {
 
     /* Ingreso de usuario en la base de datos */
     const newUser = await pool.query(
-      "INSERT INTO freelancerUsuario (username_freelancer, nombre_completo, password) VALUES($1, $2, $3) RETURNING *",
+      "INSERT INTO freelancerUsuario (username_freelancer, nombre_completo, password, estado) VALUES($1, $2, $3, $4) RETURNING *",
       [
         username,
         name,
-        hashedPassword
+        hashedPassword,
+        state
       ]
     );
 
@@ -79,6 +80,13 @@ router.post("/login", async (req, res) => {
 
 
 });
+
+router.get('/logout', (req, res) => {
+
+  req.logout()
+
+  return res.status(200).json({ msg: 'Sesion cerrada exitosamente' })
+})
 
 
 module.exports = router;

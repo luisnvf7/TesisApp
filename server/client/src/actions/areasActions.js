@@ -28,3 +28,11 @@ export const sendAreas = (data, user, history) => async (dispatch) => {
 
   history.push('/dashboard')
 }
+
+export const getAreaById = (id) => {
+
+
+  
+
+
+}
