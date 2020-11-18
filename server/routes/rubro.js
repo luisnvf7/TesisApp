@@ -23,7 +23,7 @@ router.post('/rubro', async (req, res) => {
 
     const resp = await pool.query("INSERT INTO RUBRO (nombre) VALUES ($1)", [nombre])
 
-    console.log("RESP", resp)
+    return res.status(200).json({ message: "Rubro creado exitosamente" })
 
     // return res.json({resp: resp})
 

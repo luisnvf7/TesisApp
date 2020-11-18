@@ -1,5 +1,6 @@
 /* React importaciones */
 import React, { useState, useEffect, useLayoutEffect } from "react";
+import { connect } from "react-redux";
 
 /* React boostrap */
 import { Navbar, Nav, Button, Overlay, OverlayTrigger, Popover, Container, Col, Row } from "react-bootstrap";
@@ -7,27 +8,34 @@ import { Navbar, Nav, Button, Overlay, OverlayTrigger, Popover, Container, Col, 
 /* Router */
 import { Link } from "react-router-dom";
 
-import { connect } from "react-redux";
 
 
-const Navigation = ( { type, auth } ) => {
+import { logOut } from '../actions/authAction'
+
+const Navigation = ( { type, auth, onLogOut } ) => {
+
+  const logOut = () => {
+
+    console.log("LOG OUT")
+
+    onLogOut()
+    
+  }
 
   const popover = (
+
     <Popover id="popover-basic">
-      <Popover.Title style = {{ textAlign: 'center' }} as="h3">{ auth.user.username_freelancer }</Popover.Title>
+      <Popover.Title style = {{ textAlign: 'center' }} as="h3">{  type !== "home" ? auth.user.username_freelancer : null }</Popover.Title>
       <Popover.Content>
         <Container>
           <Row>
             <Col> <Link to = "/micuenta"> Mi cuenta</Link></Col>
-            {/* <Col> <Link to = "/miperfil">Mi perfil</Link></Col> */}
           </Row>
           <hr />
           <Row>
-             <label style = {{  width: '100%', textAlign: 'center'}}>Cerrar Sesion</label>
+             <label style = {{  width: '100%', textAlign: 'center'}} onClick={ () => logOut() } >Cerrar Sesion</label>
           </Row>
         </Container>
-        {/* And here's some <strong>amazing</strong> content. It's very engaging.
-        right? */}
       </Popover.Content>
     </Popover>
   );
@@ -116,8 +124,13 @@ const mapStateToProps = (state) => {
    
 }
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
 
+  return {
+    onLogOut : (history) => {
+      dispatch(logOut(history))
+    }
+  }
 
 }
 

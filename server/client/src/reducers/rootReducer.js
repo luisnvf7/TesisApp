@@ -4,12 +4,14 @@ import authReducer from './authReducer'
 import rubroReducer from './rubroReducer'
 import areaReducer from './areaReducer'
 import isRender from './isRenderReducer'
+import anuncios from './anunciosReducer'
 
 export default combineReducers({
     error: errorReducer,
     auth: authReducer,
     rubros: rubroReducer,
     areas: areaReducer,
-    isFirstRender: isRender
+    isFirstRender: isRender,
+    anuncios: anuncios
 })
 

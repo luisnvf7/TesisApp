@@ -23,3 +23,7 @@ export const SEND_AREAS = 'SEND_AREAS'
 
 /* Render */
 export const SET_RENDER = 'SET_RENDER'
+
+/* Anuncios */
+export const GET_ANUNCIOS = 'GET_ANUNCIOS'
+export const LOADING_ANUNCIOS = 'LOADING_ANUNCIOS'

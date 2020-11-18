@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 /* HOC */
 import PrivateRoute from './Hoc/PrivateRouter'
 import PrivateRouteRegister from './Hoc/PrivateRouterRegister'
+import PrivateRouteLoggedIn from './Hoc/isLoggedIn'
 
 /* Pages */
 import Login from './Pages/login'
@@ -28,7 +29,10 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         { console.log("USER", JSON.parse(localStorage.getItem("user"))) }
-        <Route exact path = "/" component = {Principal} />
+
+        <PrivateRouteLoggedIn exact path = "/" component = {Principal} />
+
+        {/* <Route exact path = "/" component = {Principal} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/registro" component={Register} />
         
