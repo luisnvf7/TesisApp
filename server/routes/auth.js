@@ -2,8 +2,6 @@ const { Router } = require("express");
 const router = Router();
 const pool = require("../db");
 
-const passport = require('passport')
-
 const { genSaltSync, hashSync, compare } = require("bcryptjs");
 
 const passport = require('passport')
