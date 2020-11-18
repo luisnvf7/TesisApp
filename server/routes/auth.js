@@ -14,13 +14,8 @@ router.post("/registro", async (req, res) => {
   const {
     username,
     password,
-    repeatedpass,
-    nombre,
-    apellido,
-    fecha_nacimiento,
-    ciudad,
-    rol,
-    curriculum_url,
+    name,
+    state,
   } = req.body;
 
   try {
@@ -39,31 +34,39 @@ router.post("/registro", async (req, res) => {
 
     /* Ingreso de usuario en la base de datos */
     const newUser = await pool.query(
-      "INSERT INTO freelancerUsuario (username_freelancer, password, nombre, apellido, fecha_nacimiento, ciudad, rol, curriculum_url) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      "INSERT INTO freelancerUsuario (username_freelancer, nombre_completo, password, estado) VALUES($1, $2, $3, $4) RETURNING *",
       [
         username,
+        name,
         hashedPassword,
-        nombre,
-        apellido,
-        fecha_nacimiento,
-        ciudad,
-        rol,
-        curriculum_url,
+        state
       ]
     );
 
-    return res
-      .status(200)
-      .json({
-        message: "Usuario registrado satisfactoriamente",
-        user: newUser.rows,
-      });
+    // delete newUser.rows[0].password
+
+    passport.authenticate('local', (err, user, info) => {
+   
+      if(user) {
+        req.login(user, () => {
+          return res
+          .status(200)
+          .json({
+            message: "Usuario registrado satisfactoriamente",
+            user: newUser.rows[0],
+          })
+        })
+      } 
+    })(req, res)
+
+    
   } catch (err) {
     console.log("ERROR", err);
   }
 });
 
-router.post("/login", passport.authenticate('local'), async (req, res) => {
+
+router.post("/login", async (req, res) => {
 
   passport.authenticate('local', (err, user, info) => {
    
@@ -79,6 +82,13 @@ router.post("/login", passport.authenticate('local'), async (req, res) => {
 
 
 });
+
+router.get('/logout', (req, res) => {
+
+  req.logout()
+
+  return res.status(200).json({ msg: 'Sesion cerrada exitosamente' })
+})
 
 
 module.exports = router;

@@ -1,17 +1,51 @@
 /* React importaciones */
 import React, { useState, useEffect, useLayoutEffect } from "react";
+import { connect } from "react-redux";
 
 /* React boostrap */
-import { Navbar, Nav, Button } from "react-bootstrap";
+import { Navbar, Nav, Button, Overlay, OverlayTrigger, Popover, Container, Col, Row } from "react-bootstrap";
 
 /* Router */
 import { Link } from "react-router-dom";
 
-const Navigation = () => {
 
-  return (
-    <div>
-      <Navbar className = "bg-success">
+
+import { logOut } from '../actions/authAction'
+
+const Navigation = ( { type, auth, onLogOut } ) => {
+
+  const logOut = () => {
+
+    console.log("LOG OUT")
+
+    onLogOut()
+    
+  }
+
+  const popover = (
+
+    <Popover id="popover-basic">
+      <Popover.Title style = {{ textAlign: 'center' }} as="h3">{  type !== "home" ? auth.user.username_freelancer : null }</Popover.Title>
+      <Popover.Content>
+        <Container>
+          <Row>
+            <Col> <Link to = "/micuenta"> Mi cuenta</Link></Col>
+          </Row>
+          <hr />
+          <Row>
+             <label style = {{  width: '100%', textAlign: 'center'}} onClick={ () => logOut() } >Cerrar Sesion</label>
+          </Row>
+        </Container>
+      </Popover.Content>
+    </Popover>
+  );
+  
+
+  const render = () => {
+
+    if ( type === "home") {
+      return (
+        <Navbar className = "bg-success">
         <Navbar.Collapse className="justify-content-end">
           <Nav>
             <Nav.Item style={{ marginRight: "50px" }}>
@@ -33,8 +67,73 @@ const Navigation = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      )
+    } else {
+        return (
+          <Navbar className = "bg-success">
+          <Navbar.Collapse className="justify-content-end">
+            <Nav style = {{ marginRight: '100px' }}>
+              <Nav.Item style={{ marginRight: "50px" }}>
+                <Button variant="success">
+                  {" "}
+                  <Link to="/login" style={{ color: "white" }}>
+                    ??
+                  </Link>
+                </Button>
+              </Nav.Item>
+              <Nav.Item>
+
+              <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+
+                <Button variant="success">
+                  {" "}
+                  {/* <Link to="/registro" style={{ color: "white" }}> */}
+                    Cuenta
+                  {/* </Link> */}
+                </Button>
+
+              </OverlayTrigger>
+
+
+              </Nav.Item>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        )
+    }
+
+  }
+
+  return (
+    <div>
+      {  
+        render()
+      }
     </div>
   );
 };
 
-export default Navigation;
+const mapStateToProps = (state) => {
+    
+    const { auth } = state
+    
+
+    return {
+      auth
+    }
+   
+}
+
+const mapDispatchToProps = (dispatch) => {
+
+  return {
+    onLogOut : (history) => {
+      dispatch(logOut(history))
+    }
+  }
+
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps) ( Navigation );

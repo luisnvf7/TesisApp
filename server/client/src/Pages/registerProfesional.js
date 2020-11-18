@@ -1,6 +1,9 @@
 /* React importaciones */
 import React, { useEffect, useState } from "react";
 
+import { connect } from "react-redux";
+
+
 /* React Boostrap */
 import {
   Card,
@@ -28,17 +31,52 @@ import { Link } from "react-router-dom";
 import "../styles/PageStyles/registerProfesional.css";
 
 import { Spring, Transition } from "react-spring/renderprops";
+import { register } from "../actions/authAction";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const RegisterProfesional = (props) => {
+
+  useEffect(() => {
+
+    console.log("PROPS", props)
+
+    if (props.error.id != null) {
+      console.log("ERROR", props.error)
+      toast.error(props.error.msg.message)
+      props.clearErrors()
+    }
+
+  }, [props.error])
+
   const [isShowPass1, setIsShowPass1] = useState(true);
   const [isShowPass2, setIsShowPass2] = useState(true);
 
   const [states, setStates] = useState([
-    "Zulia",
-    "Maracay",
-    "Caracas",
-    "Barquisimeto",
-  ]);
+    "Amazonas",
+    "Anzoategui",
+    "Aragua",
+    "Barinas",
+    "Bolivar",
+    "Carabobo",
+    "Cojedes",
+    "Delta Amacuro",
+    "Distrito Capital",
+    "Falcon",
+    "Guarico",
+    "Lara",
+    "Merida",
+    "Miranda",
+    "Monagas",
+    "Nueva Esparta",
+    "Portuguesa",
+    "Sucre",
+    "Tachira",
+    "Trujillo",
+    "La Guaira",
+    "Yaracuy",
+    "Zulia"
+    ]);
 
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -63,6 +101,8 @@ const RegisterProfesional = (props) => {
 
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
 
+  let copyStates = [...states]
+
   const stateChange = (v) => {
     setSelectedState(v);
     setUserInfo({ ...userInfo, state: v });
@@ -73,19 +113,22 @@ const RegisterProfesional = (props) => {
       errorHandler(setNameError, "Por favor, ingrese un nombre");
       console.log("User vacio");
     }
-    if (userInfo.username === "") {
+    else if (userInfo.username === "") {
       errorHandler(setUsernameError, "Por favor, ingrese un nombre de usuario");
       console.log("Username vacio");
     }
-    if (userInfo.password === "") {
+    else if (userInfo.password === "") {
       errorHandler(setPasswordError, "Por favor, ingrese una contraseña");
       console.log("Password vacio");
     }
-    if (userInfo.state === "") {
+    else if (userInfo.state === "") {
       errorHandler(setStateError, "Por favor, ingrese una fecha");
     }
-    if (userInfo.password !== confirmPassword && userInfo.password.length > 0) {
+    else if (userInfo.password !== confirmPassword && userInfo.password.length > 0) {
       errorHandler(setConfirmPasswordError, "Contraseñas no coinciden");
+    } else {
+      props.onRegister(userInfo, props.history)
+
     }
   };
 
@@ -97,9 +140,8 @@ const RegisterProfesional = (props) => {
   };
 
   const registrarse = () => {
-    checkForm();
 
-    console.log("REGISTRO", userInfo);
+    checkForm();
   };
 
   return (
@@ -256,7 +298,14 @@ const RegisterProfesional = (props) => {
                 {selectedState}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu style={{ width: "100%" }}>
+              <Dropdown.Menu style={{ width: "100%"}} className = "dropdown-register">
+                <div style = {{  display: 'flex', justifyContent: 'center' }}>
+
+              <FormControl style = {{ width: '90%' }}
+                placeholder="Ingrese ciudad"
+                onChange={ (e) => setStates(states.filter( (v) => v.includes(e.target.value) ) )  }
+              />
+                </div>
                 {states.map((value) => (
                   <Dropdown.Item onClick={() => stateChange(value)}>
                     {value}
@@ -282,6 +331,8 @@ const RegisterProfesional = (props) => {
             >
               Registrarse
             </Button>
+            <ToastContainer />
+
 
             <hr />
 
@@ -300,4 +351,26 @@ const RegisterProfesional = (props) => {
   );
 };
 
-export default RegisterProfesional;
+const mapStateToProps = (state) => {
+
+  const { auth, error } = state;
+
+  return {
+    auth,
+    error,
+  };
+
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegister: (user, history) => {
+      dispatch(register(user, history));
+    },
+    clearErrors: () => {
+      dispatch({ type: "CLEAR_ERRORS" });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)( RegisterProfesional );

@@ -13,3 +13,17 @@ export const REGISTER_FAIL = "REGISTER_FAIL"
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const NOT_USER = "NOT_USER"
+
+/* Rubros */
+export const GET_RUBROS = 'GET_RUBROS'
+
+/* Areas */
+export const GET_AREAS = 'GET_AREAS'
+export const SEND_AREAS = 'SEND_AREAS'
+
+/* Render */
+export const SET_RENDER = 'SET_RENDER'
+
+/* Anuncios */
+export const GET_ANUNCIOS = 'GET_ANUNCIOS'
+export const LOADING_ANUNCIOS = 'LOADING_ANUNCIOS'

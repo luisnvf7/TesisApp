@@ -1,9 +1,9 @@
 import {USER_LOADING, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL  } from '../actions/types'
 
 const initialState = {
-    isAuthenticated: null,
+    isAuthenticated: JSON.parse(localStorage.getItem("user")) === null ? null : true,
     isLoading: false, 
-    user: null
+    user: JSON.parse(localStorage.getItem("user"))
 }
 
 export default function (state = initialState, action) {
@@ -22,10 +22,10 @@ export default function (state = initialState, action) {
             }
         case REGISTER_SUCCESS:
             return {
-
+                ...state,
+                user: action.payload.user,
             }
         case LOGIN_SUCCESS:
-            console.log(action)
             return {
                 ...state,
                 isAuthenticated: true,

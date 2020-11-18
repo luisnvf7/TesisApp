@@ -36,3 +36,8 @@
     }
 
 }
+
+.dropdown-register {
+    overflow: scroll;
+    height: 240px
+}
