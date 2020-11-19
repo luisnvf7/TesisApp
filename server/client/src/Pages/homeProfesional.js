@@ -45,7 +45,9 @@ const HomeProfesional = ({
   rubros,
   anuncios,
   onGetAnuncios,
-  onGetAreaById
+  onGetAreaById,
+
+
 }) => {
   const [chips, setChips] = useState([]);
 
@@ -69,6 +71,7 @@ const HomeProfesional = ({
   }, []);
 
   useEffect(() => {
+
     onGetAnuncios();
 
     /* Hacer peticion si aun no tenemos los rubros en redux */
@@ -76,7 +79,7 @@ const HomeProfesional = ({
       onGetRubros();
     }
 
-    setChips((oldValues) => [...oldValues, { value: "Todas las categorias" }]);
+    setChips((oldValues) => [...oldValues, { value: "Todas las categorias", id: 0 }]);
   }, []);
 
   useEffect(() => {
@@ -85,10 +88,11 @@ const HomeProfesional = ({
         return {
           nombre: v.nombre,
           isChecked: false,
+          id: v.rubro_id
         };
       });
 
-      newValue.unshift({ nombre: "Todas las categorias", isChecked: true });
+      newValue.unshift({ nombre: "Todas las categorias", isChecked: true, id : 0 });
 
       setRubrosState(newValue);
     }
@@ -105,6 +109,40 @@ const HomeProfesional = ({
 
   }, [anuncios.anuncios]  )
 
+  useEffect(() => {
+
+    console.log("HISTORY", history)
+
+    console.log("CHIPS", chips)
+
+    let query = "?"
+      
+    if(chips.length > 0) {
+
+      chips.map( (v, i) => {
+        console.log("VALOR ", v)
+        query += "b"  +i + "=" + v.id + "&"
+      })
+
+      history.push(({
+        pathname: '/home',
+        search: query
+      }))
+
+      onGetAnuncios(query)
+
+    } else {
+      history.push({
+        patname: '/home',
+        search: ''
+      })
+
+      onGetAnuncios("")
+    } 
+
+  }, [chips])
+
+
   const getRubroByAnuncio = (rubroId) => {
     console.log("RUBROS RUBROS", rubros.rubros.find(v => v.rubro_id == rubroId))
     return (
@@ -115,6 +153,9 @@ const HomeProfesional = ({
   }
 
   const changeCombo = (v, index, evento) => {
+
+    console.log("VALOR", v)
+
     if (evento.target.checked) {
       // if(chips.length > 2) {
       //   toast.error("Solo puedes Seleccionar 3 Categorias")
@@ -122,7 +163,7 @@ const HomeProfesional = ({
       let values = [...rubrosState];
       values[index].isChecked = evento.target.checked;
       setRubrosState(values);
-      setChips((oldValues) => [...oldValues, { value: v.nombre }]);
+      setChips((oldValues) => [...oldValues, { value: v.nombre, id: v.id }]);
       // }
     } else {
       let valor = [...rubrosState];
@@ -134,9 +175,32 @@ const HomeProfesional = ({
   };
 
   const onSearch = () => {
+
+    console.log("VER VALOR", history.location)
+
     if (chips.length <= 0 && valueInput === "") {
       toast.warn("Ingrese algun filtro");
     } else {
+
+      // history.push({
+      //   patname: '/home',
+      //   search: history.location.search + "value="+ valueInput
+      // })
+
+      let query = "?"
+      
+
+      chips.map( (v, i) => {
+        query += "b"  +i + "=" + v.id + "&"
+      })
+
+      history.push(({
+        pathname: '/home',
+        search: query + "value=" + valueInput
+      }))
+
+      onGetAnuncios(history.location.search)
+
     }
   };
 
@@ -150,6 +214,7 @@ const HomeProfesional = ({
     updateState[getRubroIndex].isChecked = false;
 
     setRubrosState(updateState);
+
   };
 
   return (
@@ -274,7 +339,7 @@ const HomeProfesional = ({
                   );
                 })}
               </div>
-            ) : null}
+            ) : null }
             {/* </Row> */}
               
             {  /* Aqui ira el mapeo de los anuncios */ }   
@@ -328,7 +393,7 @@ const HomeProfesional = ({
                 )
               })
 
-              ) : null }
+              ) : <h1 style = {{ textAlign: 'center', marginTop: '20%' }}>No hay anuncios disponibles</h1> }
             
           </Col>
         </Row>
@@ -352,8 +417,8 @@ const mapDispatchToProps = (dispatch) => {
     onGetRubros: () => {
       dispatch(getRubros());
     },
-    onGetAnuncios: () => {
-      dispatch(getAnuncios());
+    onGetAnuncios: (query) => {
+      dispatch(getAnuncios(query));
     },
     onGetAreaById: (id) => {
       dispatch(getAreaById(id))

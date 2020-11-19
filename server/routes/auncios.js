@@ -4,6 +4,13 @@ const pool = require("../db");
 
 router.get("/anunciosnegocios", async (req, res) => {
 
+    console.log("REQ ANUNCIOS", req.query)
+
+    let array = Object.keys(req.query)
+        .map((key) => req.query[key] )
+
+    console.log("ARRAY", array)
+
     let anuncios = await pool.query('SELECT * FROM anuncios order by anuncio_id DESC')
     let anuncios_area = await pool.query("select * from anuncios_area INNER JOIN area on anuncios_area.area_id = area.area_id")
 
@@ -23,7 +30,9 @@ router.get("/anunciosnegocios", async (req, res) => {
         }
     })
 
-    console.log("FINAL_RESULT", final_result)
+
+
+    // console.log("FINAL_RESULT", final_result)
 
     // let resp = await pool.query("select * from anuncios INNER JOIN anuncios_area ON anuncios.anuncio_id = anuncios_area.anuncio_id INNER JOIN area on anuncios_area.area_id = area.area_id")
 
@@ -36,7 +45,38 @@ router.get("/anunciosnegocios", async (req, res) => {
     // console.log("ANUNCIOS _AREA", anuncios_area.rows)
     // console.log("RESP", anuncios.rows)
 
-    return res.status(200).json({ anuncios: final_result })
+    if ( array.includes("0") && (req.query.value === undefined || req.query.value === "" )  ) {
+        return res.status(200).json({ anuncios: final_result })
+
+    }
+
+    else {
+
+        if (req.query.value == undefined) {
+
+            let resultado_final = final_result.filter(v => { 
+                return array.includes(v.rubro_id.toString())
+              })
+              
+             console.log("REUSLTADO_FINAL", resultado_final )
+         
+             return res.status(200).json({ anuncios: resultado_final })
+
+        }  else {
+
+            console.log("ENTRA EN ELSE")
+
+            let resultado_final = final_result.filter(v => { 
+               return array.includes(v.rubro_id.toString()) && v.titulo.toLowerCase().includes(req.query.value.toLowerCase()) 
+             })
+             
+            console.log("REUSLTADO_FINAL", resultado_final )
+        
+            return res.status(200).json({ anuncios: resultado_final })
+        }
+
+    }
+
 
     // await pool.query("SELECT * FROM anuncios")
 
