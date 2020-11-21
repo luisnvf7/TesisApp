@@ -6,6 +6,7 @@ const cors = require('cors')
 
 const session = require('express-session')
 const passport = require('passport')
+const cookieSession = require('cookie-session')
 
 const cookieParser = require('cookie-parser')
 
@@ -16,10 +17,16 @@ app.use(express.json())
 app.use(cors())
 
 
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: false
+// app.use(session({
+//     secret: 'secret',
+//     resave: true,
+//     saveUninitialized: false
+// }))
+
+app.use(cookieSession({
+    name: 'WORK APP',
+    keys: ['very secret key'],
+    maxAge: 30 * 24 * 60 * 60 * 1000
 }))
 
 app.use(cookieParser('secretcode'))

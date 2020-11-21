@@ -27,3 +27,7 @@ export const SET_RENDER = 'SET_RENDER'
 /* Anuncios */
 export const GET_ANUNCIOS = 'GET_ANUNCIOS'
 export const LOADING_ANUNCIOS = 'LOADING_ANUNCIOS'
+
+/* User anuncios */
+export const GET_ANUNCIO_BY_USER = 'GET_ANUNCIO_BY_USER'
+export const LOADING_ANUNCIO_BY_USER = 'LOADING_ANUNCIO_BY_USER'

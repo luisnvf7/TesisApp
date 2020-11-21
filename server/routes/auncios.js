@@ -123,9 +123,39 @@ router.post("/anunciosnegocios", async (req, res) => {
 router.post("/anunciosempleados", async (req, res) => {
     
 
-
-
 });
 
+
+router.get('/personalposts', async (req, res) => {
+
+    console.log("REQ USER", req.user)
+
+    let anuncios_res = await pool.query('SELECT * FROM anuncios WHERE username_freelancer = $1', [req.user.username_freelancer] )
+
+    
+    // console.log("RESPUESTA ANUNCIOS", anuncios.rows)
+
+    let anuncios = anuncios_res.rows.sort((a, b) =>  b.anuncio_id - a.anuncio_id  )
+    let anuncios_area = await pool.query("select * from anuncios_area INNER JOIN area on anuncios_area.area_id = area.area_id where username_freelancer = $1", [req.user.username_freelancer])
+
+    let final_result = anuncios.map(anuncio => {
+
+        let filtro = anuncios_area.rows.filter(a_area  =>  a_area.anuncio_id == anuncio.anuncio_id).map(v => {
+            return {
+               rubroid: v.rubro_id,
+               area_id: v.area_id,
+               nombre : v.nombre
+            }
+        } )
+        return {
+            ...anuncio,
+            area_Info : filtro,
+            rubro_id : anuncios_area.rows.find(v => v.anuncio_id === anuncio.anuncio_id ) ? anuncios_area.rows.find(v => v.anuncio_id === anuncio.anuncio_id ).rubro_id : null
+        }
+    })
+
+    return res.status(200).json({ anuncios: final_result })
+
+})
 
 module.exports = router;

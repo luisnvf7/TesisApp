@@ -23,6 +23,9 @@ import Rubro from './Pages/rubroPage'
 import Dashboard from './Pages/dashboard'
 import MiCuenta from './Pages/miCuenta'
 import MiPerfil from './Pages/miPerfil'
+import Publicaciones from "./Pages/publicaciones";
+import Proyectos from "./Pages/proyectos";
+
 
 const App = () => {
   return (
@@ -42,6 +45,9 @@ const App = () => {
         <PrivateRouteRegister path = "/registro/postregister" component={PostRegister} />
         <PrivateRouteRegister  path = "/registro/rubro" component={Rubro}  />
         <PrivateRoute path = "/dashboard" component={Dashboard} />
+
+        <PrivateRoute path = "/mispublicaciones" component={Publicaciones} />
+        <PrivateRoute path = "/misproyectos" component={Proyectos} />
 
         {/* <Route path = "/registro/postregister" component = {PostRegister} />
         <Route path = "/registro/rubro" component = {Rubro} /> */}
