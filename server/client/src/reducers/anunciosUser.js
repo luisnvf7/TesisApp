@@ -1,4 +1,4 @@
-import { GET_ANUNCIO_BY_USER, LOADING_ANUNCIO_BY_USER } from '../actions/types'
+import { GET_ANUNCIO_BY_USER, LOADING_ANUNCIO_BY_USER, DELETE_ANUNCIO_BY_ID } from '../actions/types'
 
 const initialState = {
     userAnuncios: [],
@@ -18,6 +18,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isLoading: true  
+            }
+        case DELETE_ANUNCIO_BY_ID:
+            return {
+                ...state,
+                userAnuncios : state.userAnuncios.filter(v => v.anuncio_id !== action.payload )
             }
         default: 
             return state

@@ -132,9 +132,6 @@ router.get('/personalposts', async (req, res) => {
 
     let anuncios_res = await pool.query('SELECT * FROM anuncios WHERE username_freelancer = $1', [req.user.username_freelancer] )
 
-    
-    // console.log("RESPUESTA ANUNCIOS", anuncios.rows)
-
     let anuncios = anuncios_res.rows.sort((a, b) =>  b.anuncio_id - a.anuncio_id  )
     let anuncios_area = await pool.query("select * from anuncios_area INNER JOIN area on anuncios_area.area_id = area.area_id where username_freelancer = $1", [req.user.username_freelancer])
 
@@ -155,6 +152,17 @@ router.get('/personalposts', async (req, res) => {
     })
 
     return res.status(200).json({ anuncios: final_result })
+
+})
+
+router.delete('/personalposts/:id', async (req, res) => {
+
+    console.log("REQ PARAMS", req.params.id)
+
+    await pool.query("DELETE FROM anuncios where anuncio_id = $1", [req.params.id] )
+
+    return res.status(200).json({ message : 'Anuncio eliminado satisfactoriamente' })
+
 
 })
 

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import NavBar from "../components/navBar";
 
 /* Actions */
-import { getAnuncioByUser } from "../actions/anuncioUser";
+import { getAnuncioByUser, deleteAnuncioById } from "../actions/anuncioUser";
 
 /* React boostrap */
 import {
@@ -18,6 +18,8 @@ import {
   Image,
   Card,
 } from "react-bootstrap";
+
+import "../styles/PageStyles/anuniosUser.css" 
 
 const Publicaciones = (props) => {
   useEffect(() => {
@@ -33,12 +35,18 @@ const Publicaciones = (props) => {
             props.useranuncios.userAnuncios.map((v) => {
               return (
                 <Col md={4}>
-                  <Card style = {{ minHeight: '300px' }}>
-                    <Card.Body>
+                  <Card style = {{ marginTop: '30px' }} >
+                      <Card.Body >
+                        <div style = {{ height: '70px' }}>
                       <Card.Title>{v.titulo}</Card.Title>
                       <Card.Text>
                         {v.descripcion}
                       </Card.Text>
+
+                        </div>
+                      {/* <button >Sexo</button> */}
+                      <Button variant="danger" style = {{ marginTop: '200px' }} onClick = { () => props.onDeleteUserPost(v.anuncio_id) } >Eliminar</Button>
+                      <Button variant="warning" style = {{ marginTop: '200px', marginLeft: '5px' }}>Editar</Button>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -49,7 +57,6 @@ const Publicaciones = (props) => {
           )}
         </Row>
       </Container>
-      <h1>Publicaciones</h1>
     </div>
   );
 };
@@ -69,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     onHandleGetUserPost: () => {
       dispatch(getAnuncioByUser());
     },
+    onDeleteUserPost: (id) => {
+      dispatch(deleteAnuncioById(id))
+    }
   };
 };
 
