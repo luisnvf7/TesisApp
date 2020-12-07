@@ -67,12 +67,12 @@ router.post("/anunciosnegocios", async (req, res) => {
 
     /* El username_freelancer debe de traerse desde req.user */
 
-    const { area_id, rubro_id, username_freelancer, titulo, descripcion, disponibilidad } = req.body
+    const { area_id, rubro_id, titulo, descripcion, disponibilidad } = req.body
 
     
     const resp = await pool.query("INSERT INTO anuncios (username_freelancer, titulo, descripcion, disponibilidad) VALUES ($1, $2, $3, $4) RETURNING *", 
     [
-        username_freelancer,
+        req.user.username_freelancer,
         titulo,
         descripcion,
         disponibilidad
@@ -81,7 +81,7 @@ router.post("/anunciosnegocios", async (req, res) => {
     area_id.map( async (v) => {
         await pool.query("INSERT INTO anuncios_area (anuncio_id, username_freelancer, area_id, rubro_id) VALUES($1, $2, $3, $4)", [
             resp.rows[0].anuncio_id,
-            username_freelancer,
+            req.user.username_freelancer,
             v,
             rubro_id
         ])
@@ -136,8 +136,13 @@ router.delete('/personalposts/:id', async (req, res) => {
 
 router.put('/personalposts/:id', async (req, res) => {
 
-    console.log("EL ID EN EL ENDPOINT", req.params.id)
+    const { titulo, descripcion } = req.body
+
+    await pool.query("UPDATE anuncios SET titulo = $1, descripcion = $2 where anuncio_id = $3", [titulo, descripcion, req.params.id])
+
+    return res.status(200).json( { message: 'Anuncio modificado con exito' } )
 
 })
+
 
 module.exports = router;
